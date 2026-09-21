@@ -1,249 +1,151 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import TP4Layout from "../layouts/TP4Layout.astro";
+
+const exercices = [
+  {
+    numero: "01",
+    titre: "Simple",
+    description: "Premier graphique Observable Plot genere cote client.",
+    lien: "/simple",
+  },
+  {
+    numero: "02",
+    titre: "Simple Penguin",
+    description: "Visualisation du dataset Penguins avec Observable Plot.",
+    lien: "/simple-penguin",
+  },
+  {
+    numero: "03",
+    titre: "Penguin avec filtre",
+    description: "Filtrage dynamique des manchots selon leur espece.",
+    lien: "/penguin-filtre",
+  },
+  {
+    numero: "04",
+    titre: "Penguin multi-filtres",
+    description: "Filtres par espece, ile et sexe.",
+    lien: "/penguin-multi-filtres",
+  },
+  {
+    numero: "05",
+    titre: "Cars avec filtre",
+    description: "Visualisation automobile filtree par nombre de cylindres.",
+    lien: "/cars-filtre",
+  },
+  {
+    numero: "06",
+    titre: "Weather avec filtre",
+    description: "Evolution des temperatures selon les conditions meteorologiques.",
+    lien: "/weather-filtre",
+  },
+];
 ---
 
-<Layout>
-  <!-- HEADER -->
-  <header class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between mb-20">
-    <a href="/" class="text-xl font-bold tracking-tight">
-      Data<span class="text-slate-500">Explorer</span>
-    </a>
+<TP4Layout title="TP4 - Observable Plot">
+  <section class="hero">
+    <p class="tag">R3.12 - JavaScript cote client</p>
 
-    <nav class="flex flex-wrap items-center gap-2">
-      <a
-        href="/"
-        class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-900 text-white"
-      >
-        Accueil
-      </a>
+    <h1>
+      Observable Plot<br />
+      <span>cote client.</span>
+    </h1>
 
-      <a
-        href="/species/"
-        class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm transition"
-      >
-        Pingouins
-      </a>
-
-      <a
-        href="/cars/"
-        class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm transition"
-      >
-        Voitures
-      </a>
-
-      <a
-        href="/weather/"
-        class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm transition"
-      >
-        Météo
-      </a>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section class="grid lg:grid-cols-2 gap-12 items-center mb-24">
-    <div>
-      <p class="text-sm uppercase tracking-widest text-slate-500 font-medium mb-4">
-        Astro · Observable Plot · JavaScript
-      </p>
-
-      <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
-        Explorer les données
-        <span class="block text-slate-400">
-          autrement.
-        </span>
-      </h1>
-
-      <p class="text-lg text-slate-600 max-w-xl leading-relaxed mb-8">
-        Une collection de visualisations interactives réalisées avec Astro
-        et Observable Plot à partir de plusieurs jeux de données.
-      </p>
-
-      <a
-        href="#datasets"
-        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 text-white font-medium hover:bg-slate-700 transition"
-      >
-        Découvrir les visualisations
-        <span>↓</span>
-      </a>
-    </div>
-
-    <!-- APERÇU -->
-    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
-      <p class="text-xs uppercase tracking-widest text-slate-400 mb-6">
-        Jeux de données
-      </p>
-
-      <div class="space-y-3">
-        <a
-          href="/species/"
-          class="group flex items-center justify-between p-5 rounded-2xl bg-slate-50 hover:bg-slate-100 transition"
-        >
-          <div>
-            <p class="font-semibold">Palmer Penguins</p>
-            <p class="text-sm text-slate-500">
-              Espèces et morphologie
-            </p>
-          </div>
-
-          <span class="text-slate-400 group-hover:text-slate-900 transition">
-            01
-          </span>
-        </a>
-
-        <a
-          href="/cars/"
-          class="group flex items-center justify-between p-5 rounded-2xl bg-slate-50 hover:bg-slate-100 transition"
-        >
-          <div>
-            <p class="font-semibold">Cars</p>
-            <p class="text-sm text-slate-500">
-              Poids et puissance
-            </p>
-          </div>
-
-          <span class="text-slate-400 group-hover:text-slate-900 transition">
-            02
-          </span>
-        </a>
-
-        <a
-          href="/weather/"
-          class="group flex items-center justify-between p-5 rounded-2xl bg-slate-50 hover:bg-slate-100 transition"
-        >
-          <div>
-            <p class="font-semibold">Weather</p>
-            <p class="text-sm text-slate-500">
-              Températures et conditions météo
-            </p>
-          </div>
-
-          <span class="text-slate-400 group-hover:text-slate-900 transition">
-            03
-          </span>
-        </a>
-      </div>
-    </div>
+    <p class="intro">
+      Creation de graphiques interactifs avec Astro, JavaScript
+      et Observable Plot.
+    </p>
   </section>
 
-  <!-- DATASETS -->
-  <section id="datasets" class="mb-24">
-    <div class="mb-10">
-      <p class="text-sm text-slate-500 mb-2">
-        Visualisations
-      </p>
+  <section class="grid">
+    {
+      exercices.map((exercice) => (
+        <a href={exercice.lien} class="card">
+          <span class="number">{exercice.numero}</span>
 
-      <h2 class="text-3xl font-semibold mb-4">
-        Choisir un jeu de données
-      </h2>
+          <div>
+            <h2>{exercice.titre}</h2>
+            <p>{exercice.description}</p>
+          </div>
 
-      <p class="text-slate-600 max-w-2xl leading-relaxed">
-        Explore les différents jeux de données grâce à des graphiques
-        réalisés avec Observable Plot et des interactions JavaScript.
-      </p>
-    </div>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- PINGOUINS -->
-      <article
-        class="group bg-white border border-slate-200 rounded-3xl p-7 shadow-sm hover:-translate-y-1 hover:shadow-md transition"
-      >
-        <div class="flex items-center justify-between mb-10">
-          <span class="text-xs uppercase tracking-widest text-slate-400">
-            Dataset 01
-          </span>
-
-          <span class="text-2xl">🐧</span>
-        </div>
-
-        <h3 class="text-2xl font-semibold mb-3">
-          Pingouins
-        </h3>
-
-        <p class="text-slate-500 leading-relaxed mb-8">
-          Comparer les espèces Adelie, Gentoo et Chinstrap à partir de
-          leurs caractéristiques morphologiques.
-        </p>
-
-        <a
-          href="/species/"
-          class="inline-flex items-center gap-2 font-medium text-slate-900"
-        >
-          Explorer
-          <span class="group-hover:translate-x-1 transition">→</span>
+          <span class="arrow">→</span>
         </a>
-      </article>
-
-      <!-- VOITURES -->
-      <article
-        class="group bg-white border border-slate-200 rounded-3xl p-7 shadow-sm hover:-translate-y-1 hover:shadow-md transition"
-      >
-        <div class="flex items-center justify-between mb-10">
-          <span class="text-xs uppercase tracking-widest text-slate-400">
-            Dataset 02
-          </span>
-
-          <span class="text-2xl">🚗</span>
-        </div>
-
-        <h3 class="text-2xl font-semibold mb-3">
-          Voitures
-        </h3>
-
-        <p class="text-slate-500 leading-relaxed mb-8">
-          Observer la relation entre le poids et la puissance selon le
-          nombre de cylindres.
-        </p>
-
-        <a
-          href="/cars/"
-          class="inline-flex items-center gap-2 font-medium text-slate-900"
-        >
-          Explorer
-          <span class="group-hover:translate-x-1 transition">→</span>
-        </a>
-      </article>
-
-      <!-- METEO -->
-      <article
-        class="group bg-white border border-slate-200 rounded-3xl p-7 shadow-sm hover:-translate-y-1 hover:shadow-md transition"
-      >
-        <div class="flex items-center justify-between mb-10">
-          <span class="text-xs uppercase tracking-widest text-slate-400">
-            Dataset 03
-          </span>
-
-          <span class="text-2xl">🌦️</span>
-        </div>
-
-        <h3 class="text-2xl font-semibold mb-3">
-          Météo
-        </h3>
-
-        <p class="text-slate-500 leading-relaxed mb-8">
-          Explorer les températures minimales et maximales ainsi que les
-          différentes conditions météorologiques.
-        </p>
-
-        <a
-          href="/weather/"
-          class="inline-flex items-center gap-2 font-medium text-slate-900"
-        >
-          Explorer
-          <span class="group-hover:translate-x-1 transition">→</span>
-        </a>
-      </article>
-    </div>
+      ))
+    }
   </section>
+</TP4Layout>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-200 py-8">
-    <div class="flex flex-col gap-2 md:flex-row md:justify-between text-sm text-slate-400">
-      <p>DataExplorer</p>
+<style>
+  .hero {
+    padding: 35px 0 55px;
+  }
 
-      <p>
-        Astro · Observable Plot · TP3
-      </p>
-    </div>
-  </footer>
-</Layout>
+  .tag {
+    color: #8b7cff;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  h1 span {
+    color: #777d91;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 180px;
+    padding: 26px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background: #141720;
+    border: 1px solid #252936;
+    border-radius: 16px;
+
+    color: white;
+    text-decoration: none;
+
+    transition: 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: #7768ff;
+    background: #181b27;
+  }
+
+  .number {
+    color: #777d91;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  h2 {
+    margin: 20px 0 7px;
+    font-size: 21px;
+  }
+
+  .card p {
+    margin: 0;
+    color: #969aa8;
+    line-height: 1.5;
+  }
+
+  .arrow {
+    align-self: flex-end;
+    margin-top: 20px;
+    color: #8b7cff;
+    font-size: 25px;
+  }
+
+  @media (max-width: 700px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

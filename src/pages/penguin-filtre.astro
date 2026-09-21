@@ -1,63 +1,104 @@
 ---
+import TP4Layout from "../layouts/TP4Layout.astro";
 ---
 
-<h1>Penguin avec filtre</h1>
+<TP4Layout title="Penguin avec filtre">
+  <p class="tag">EXERCICE 03</p>
+  <h1>Penguin avec filtre</h1>
 
-<label for="species">Espèce :</label>
+  <p class="intro">
+    Filtrez les donnees des manchots selon leur espece.
+    Le graphique est mis a jour dynamiquement cote client.
+  </p>
 
-<select name="species" id="species">
-  <option value="">All species</option>
-  <option value="Adelie">Adelie</option>
-  <option value="Chinstrap">Chinstrap</option>
-  <option value="Gentoo">Gentoo</option>
-</select>
+  <div class="filters">
+    <div class="filter">
+      <label for="species">Espece</label>
 
-<div id="plot"></div>
+      <select name="species" id="species">
+        <option value="">Toutes les especes</option>
+        <option value="Adelie">Adelie</option>
+        <option value="Chinstrap">Chinstrap</option>
+        <option value="Gentoo">Gentoo</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="plot-card">
+    <div id="plot"></div>
+  </div>
+</TP4Layout>
 
 <script>
   import * as Plot from "@observablehq/plot";
   import penguins from "../assets/penguins.json";
 
-  // Récupère le select
   const selectSpecies =
     document.querySelector<HTMLSelectElement>("#species");
 
-  // Fonction pour afficher le graphique
   function renderPlot() {
     if (!selectSpecies) return;
 
-    // Lit la valeur du select
     const species = selectSpecies.value;
 
-    // Récupère la div du graphique
-    const div = document.querySelector<HTMLDivElement>("#plot");
+    const div =
+      document.querySelector<HTMLDivElement>("#plot");
 
     if (!div) return;
 
-    // Supprime le graphique précédent
     div.innerHTML = "";
 
-    // Crée le graphique
     const plot = Plot.plot({
+      width: 900,
+      height: 520,
+
+      marginTop: 30,
+      marginRight: 30,
+      marginBottom: 55,
+      marginLeft: 65,
+
+      grid: true,
+
+      x: {
+        label: "Longueur du bec (mm)",
+      },
+
+      y: {
+        label: "Profondeur du bec (mm)",
+      },
+
+      color: {
+        legend: true,
+        label: "Espece",
+      },
+
       marks: [
         Plot.dot(penguins, {
           x: "culmen_length_mm",
           y: "culmen_depth_mm",
           stroke: "species",
+          r: 5,
 
-          // Filtre selon l'espèce sélectionnée
-          filter: (d) => species === "" || d.species === species,
+          filter: (d) =>
+            species === "" || d.species === species,
+
+          tip: true,
         }),
       ],
     });
 
-    // Affiche le nouveau graphique
     div.append(plot);
   }
 
-  // Actualise lors d'un changement
   selectSpecies?.addEventListener("change", renderPlot);
 
-  // Affiche le graphique au chargement
   renderPlot();
 </script>
+
+<style>
+  .tag {
+    color: #8b7cff;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+</style>
