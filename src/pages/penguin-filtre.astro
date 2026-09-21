@@ -1,0 +1,63 @@
+---
+---
+
+<h1>Penguin avec filtre</h1>
+
+<label for="species">Espèce :</label>
+
+<select name="species" id="species">
+  <option value="">All species</option>
+  <option value="Adelie">Adelie</option>
+  <option value="Chinstrap">Chinstrap</option>
+  <option value="Gentoo">Gentoo</option>
+</select>
+
+<div id="plot"></div>
+
+<script>
+  import * as Plot from "@observablehq/plot";
+  import penguins from "../assets/penguins.json";
+
+  // Récupère le select
+  const selectSpecies =
+    document.querySelector<HTMLSelectElement>("#species");
+
+  // Fonction pour afficher le graphique
+  function renderPlot() {
+    if (!selectSpecies) return;
+
+    // Lit la valeur du select
+    const species = selectSpecies.value;
+
+    // Récupère la div du graphique
+    const div = document.querySelector<HTMLDivElement>("#plot");
+
+    if (!div) return;
+
+    // Supprime le graphique précédent
+    div.innerHTML = "";
+
+    // Crée le graphique
+    const plot = Plot.plot({
+      marks: [
+        Plot.dot(penguins, {
+          x: "culmen_length_mm",
+          y: "culmen_depth_mm",
+          stroke: "species",
+
+          // Filtre selon l'espèce sélectionnée
+          filter: (d) => species === "" || d.species === species,
+        }),
+      ],
+    });
+
+    // Affiche le nouveau graphique
+    div.append(plot);
+  }
+
+  // Actualise lors d'un changement
+  selectSpecies?.addEventListener("change", renderPlot);
+
+  // Affiche le graphique au chargement
+  renderPlot();
+</script>

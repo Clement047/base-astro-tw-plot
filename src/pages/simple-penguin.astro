@@ -1,0 +1,25 @@
+---
+---
+
+<h1>Simple Penguin</h1>
+
+<div id="plot"></div>
+
+<script>
+  import * as Plot from "@observablehq/plot";
+  import penguins from "../assets/penguins.json";
+
+  const plot = Plot.plot({
+    marks: [
+      Plot.dot(penguins, {
+        x: "culmen_length_mm",
+        y: "culmen_depth_mm",
+        stroke: "species",
+      }),
+    ],
+  });
+
+  const div = document.querySelector("#plot");
+
+  div?.append(plot);
+</script>
